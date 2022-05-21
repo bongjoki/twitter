@@ -1,14 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './components/App'
-import reportWebVitals from './reportWebVitals'
-import firebase from './firebase'
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom';
 
-console.log(firebase)
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(
-  <React.StrictMode>
+import App from 'components/App';
+
+ReactDOM.render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
-)
-reportWebVitals()
+  </StrictMode>,
+  document.getElementById('root'),
+);
