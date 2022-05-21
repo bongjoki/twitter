@@ -5,9 +5,8 @@ import Home from '../routes/Home';
 import Profile from '../routes/Profile';
 import EditProfile from '../routes/EditProfile';
 import Navigation from './Navigation';
-import { Redirect } from 'react-router-dom';
 
-const AppRouter = ({ isLoggedIn }) => {
+const AppRouter = ({ isLoggedIn, user }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
@@ -15,7 +14,7 @@ const AppRouter = ({ isLoggedIn }) => {
         {isLoggedIn ? (
           <>
             <Route exact path="/">
-              <Home />
+              <Home user={user} />
               {/* <EditProfile /> */}
             </Route>
             <Route exact path="/profile">

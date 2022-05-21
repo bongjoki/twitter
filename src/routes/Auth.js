@@ -21,14 +21,12 @@ const Auth = () => {
   const onSubmit = async event => {
     event.preventDefault();
     try {
-      let data;
       if (newAccount) {
-        data = await authService.createUserWithEmailAndPassword(email, password);
+        await authService.createUserWithEmailAndPassword(email, password);
       }
       if (!newAccount) {
-        data = await authService.signInWithEmailAndPassword(email, password);
+        await authService.signInWithEmailAndPassword(email, password);
       }
-      console.log(data);
     } catch (e) {
       console.log(e);
       setError(e.message);
@@ -46,8 +44,7 @@ const Auth = () => {
     if (name === 'github') {
       provider = new firebaseInstance.auth.GithubAuthProvider();
     }
-    const data = await authService.signInWithPopup(provider);
-    console.log(data);
+    await authService.signInWithPopup(provider);
   };
   return (
     <div>
