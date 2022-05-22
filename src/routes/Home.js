@@ -1,6 +1,6 @@
 //snippets rafce
+import Tweet from 'components/Tweet';
 import { dbService } from 'firebaseInstance';
-import { doc } from 'prettier';
 import React from 'react';
 import { useState, useEffect } from 'react';
 
@@ -25,30 +25,34 @@ const Home = ({ user }) => {
     setTweet('');
   };
 
-  const onChnage = event => {
+  const onChange = event => {
     const {
       target: { value },
     } = event;
     setTweet(value);
   };
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        placeholder="What's on your mind?"
-        maxLength={120}
-        value={tweet}
-        onChange={onChnage}
-      />
-      <input type="submit" value="Tweet" />
+    <>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={120}
+          value={tweet}
+          onChange={onChange}
+        />
+        <input type="submit" value="Tweet" />
+      </form>
       <div>
-        {tweets.map(t => (
-          <div key={t.id}>
-            <h4>{t.text}</h4>
-          </div>
+        {tweets.map(tweet => (
+          <Tweet
+            key={tweet.id}
+            tweet={tweet}
+            isMyTweet={tweet.creatorId === user.uid}
+          />
         ))}
       </div>
-    </form>
+    </>
   );
 };
 
