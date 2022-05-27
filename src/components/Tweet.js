@@ -1,4 +1,4 @@
-import { dbService } from 'firebaseInstance';
+import { dbService, storageService } from 'firebaseInstance';
 import React, { useState } from 'react';
 
 const Tweet = ({ tweet, isMyTweet }) => {
@@ -8,6 +8,7 @@ const Tweet = ({ tweet, isMyTweet }) => {
     const ok = window.confirm('Are you sure tou want to delete this tweet?');
     if (ok) {
       await dbService.doc(`tweets/${tweet.id}`).delete();
+      await storageService.refFromURL(tweet.fileUrl).delete();
     }
   };
   const toggleEditable = () => setEditable(prev => !prev);
@@ -40,6 +41,9 @@ const Tweet = ({ tweet, isMyTweet }) => {
       ) : (
         <>
           <h4>{tweet.text}</h4>
+          {tweet.fileUrl && (
+            <img src={tweet.fileUrl} width="50px" height="50px" alt="" />
+          )}
           {isMyTweet && (
             <>
               <button onClick={onDeleteClick}>Delete Tweet</button>
