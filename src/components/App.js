@@ -2,7 +2,7 @@ import AppRouter from 'components/Router';
 import { useState } from 'react';
 import { authService } from 'firebaseInstance';
 import { useEffect } from 'react';
-
+import { cloneDeep } from 'lodash';
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,8 +19,23 @@ function App() {
       setInit(true);
     });
   }, []);
-
-  return <>{init ? <AppRouter isLoggedIn={isLoggedIn} user={userObject} /> : 'Initializing...'}</>;
+  const refreshUser = () => {
+    const user = cloneDeep(authService.currentUser);
+    setUserObject(user);
+  };
+  return (
+    <>
+      {init ? (
+        <AppRouter
+          isLoggedIn={isLoggedIn}
+          user={userObject}
+          refreshUser={refreshUser}
+        />
+      ) : (
+        'Initializing...'
+      )}
+    </>
+  );
 }
 
 export default App;
