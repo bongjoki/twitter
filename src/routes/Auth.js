@@ -1,33 +1,23 @@
-import AuthForm from 'components/AuthForm';
-import { authService, firebaseInstance } from 'firebaseInstance';
+import AuthForm from 'components/Auth/Form';
+import AuthHeader from 'components/Auth/Header';
+import CssMarginTop from 'components/Css/MarginTop';
+import SocialSignInSection from 'components/Auth/SocialSignInSection';
 import React from 'react';
+import styledComponents from 'styled-components';
+
+const AuthPage = styledComponents.div`
+  padding: 32px;
+`;
 
 const Auth = () => {
-  const onSocialClick = async event => {
-    const {
-      target: { name },
-    } = event;
-    let provider;
-    if (name === 'google') {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
-    }
-    if (name === 'github') {
-      provider = new firebaseInstance.auth.GithubAuthProvider();
-    }
-    await authService.signInWithPopup(provider);
-  };
   return (
-    <div>
+    <AuthPage>
+      <AuthHeader />
+      <CssMarginTop value={20} />
+      <SocialSignInSection />
+      <CssMarginTop value={32} />
       <AuthForm />
-      <div>
-        <button name="google" onClick={onSocialClick}>
-          Continue with Google
-        </button>
-        <button name="github" onClick={onSocialClick}>
-          Continue with Github
-        </button>
-      </div>
-    </div>
+    </AuthPage>
   );
 };
 

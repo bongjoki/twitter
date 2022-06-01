@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { authService } from 'firebaseInstance';
 import { useEffect } from 'react';
 import { cloneDeep } from 'lodash';
+
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
