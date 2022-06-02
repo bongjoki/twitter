@@ -1,34 +1,28 @@
 import React from 'react';
 import { authService, firebaseInstance } from 'firebaseInstance';
-import styledComponents, { css } from 'styled-components';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { colorWhite } from 'components/Css/Colors';
+import { buttonStyle1 } from 'components/Css/ButtonStyles';
+import { FontSizeBody2 } from 'components/Css/FontSize';
 
-const CompanyIcon = styledComponents(FontAwesomeIcon)`
+const CompanyIcon = styled(FontAwesomeIcon)`
   position: absolute;
-  font-size: 20px;
-  right:20px;
+  font-size: ${FontSizeBody2};
+  right: 20px;
 `;
 
-const buttonStyle = css`
-  position: relative;
-  display: block;
-  cursor: pointer;
-  width: 100%;
-  padding: 8px 0;
-  border-radius: 24px;
-  border: none;
-  background-color: #ffffff;
-  font-size: 16px;
-  display: flex;
-  justify-content: center;
+const GoogleButton = styled.button`
+  ${buttonStyle1}
+  background-color: ${colorWhite};
+  font-weight: 600;
 `;
-const GoogleButton = styledComponents.button`
-  ${buttonStyle}
-`;
-const AppleButton = styledComponents.button`
+const AppleButton = styled.button`
   margin-top: 12px;
-  ${buttonStyle}
+  ${buttonStyle1}
+  background-color: ${colorWhite};
+  font-weight: 600;
 `;
 const SocialSignInSection = () => {
   const onSocialClick = async event => {
@@ -48,11 +42,11 @@ const SocialSignInSection = () => {
     <>
       <GoogleButton name="google" onClick={onSocialClick}>
         <CompanyIcon icon={faGoogle} />
-        Continue with Google
+        Google 계정으로 계속하기
       </GoogleButton>
       <AppleButton name="github" onClick={onSocialClick}>
         <CompanyIcon icon={faGithub} />
-        Continue with Github
+        Github 계정으로 계속하기
       </AppleButton>
     </>
   );

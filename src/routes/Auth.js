@@ -3,9 +3,9 @@ import AuthHeader from 'components/Auth/Header';
 import CssMarginTop from 'components/Css/MarginTop';
 import SocialSignInSection from 'components/Auth/SocialSignInSection';
 import React from 'react';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 
-const AuthPage = styledComponents.div`
+const AuthPage = styled.div`
   padding: 32px;
 `;
 

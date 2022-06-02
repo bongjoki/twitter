@@ -1,11 +1,9 @@
 import { dbService, storageService } from 'firebaseInstance';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from 'react';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 
-const Form = styledComponents.form`
-
-`;
+const Form = styled.form``;
 
 const TweetFactory = ({ user }) => {
   const [tweet, setTweet] = useState('');

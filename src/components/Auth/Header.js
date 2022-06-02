@@ -1,23 +1,29 @@
 import React from 'react';
-import styledComponents from 'styled-components';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { colorWhite } from 'components/Css/Colors';
+import {
+  FontSizeBody1,
+  FontSizeBody3,
+  FontSizeH1,
+} from 'components/Css/FontSize';
 
-const TwitterIcon = styledComponents(FontAwesomeIcon)`
-  color: #ffffff;
-  font-size: 40px;
+const TwitterIcon = styled(FontAwesomeIcon)`
+  color: ${colorWhite};
+  font-size: ${FontSizeH1};
   cursor: pointer;
 `;
-const Description = styledComponents.div`
+const Description = styled.div`
   margin-top: 36px;
-  color: #ffffff;
-  font-size: 24px;
+  color: ${colorWhite};
+  font-size: ${FontSizeBody1};
   font-weight: 600;
 `;
-const SubDescription = styledComponents.div`
+const SubDescription = styled.div`
   margin-top: 36px;
-  color: #ffffff;
-  font-size: 16px;
+  color: ${colorWhite};
+  font-size: ${FontSizeBody3};
   font-weight: 500;
 `;
 

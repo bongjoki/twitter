@@ -1,4 +1,3 @@
-//snippets rafce
 import Tweet from 'components/Tweet';
 import TweetFactory from 'components/TweetFactory';
 import { dbService } from 'firebaseInstance';
