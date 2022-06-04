@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { colorWhite } from 'components/Css/Colors';
 import { buttonStyle1 } from 'components/Css/ButtonStyles';
-import { FontSizeBody2 } from 'components/Css/FontSize';
 
 const CompanyIcon = styled(FontAwesomeIcon)`
   position: absolute;
-  font-size: ${FontSizeBody2};
+  width: 20px;
   right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 const GoogleButton = styled.button`

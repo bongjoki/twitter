@@ -121,7 +121,11 @@ const AuthForm = () => {
         />
         {error}
       </StyledAuthForm>
-      <Description>이미 트위터에 가입하셨나요?</Description>
+      <Description>
+        {newAccount
+          ? '이미 트위터에 가입하셨나요?'
+          : '회원가입이 필요하신가요?'}
+      </Description>
       <ToggleButton onClick={toggleAccount}>
         {newAccount ? '로그인' : '회원가입'}
       </ToggleButton>
