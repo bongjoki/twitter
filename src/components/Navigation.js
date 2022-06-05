@@ -16,6 +16,8 @@ const StyledNavigation = styled.ul`
   width: 100%;
   max-width: 500px;
   display: flex;
+  z-index: 10;
+  background-color: #000000;
 `;
 
 const Icon = styled(FontAwesomeIcon)`

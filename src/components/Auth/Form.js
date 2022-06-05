@@ -38,10 +38,9 @@ const Input = styled.input`
 `;
 
 const Submit = styled.input`
+  ${buttonStyle1}
   background-color: ${colorBlue1};
   color: ${colorWhite};
-  font-weight: 600;
-  ${buttonStyle1}
 `;
 
 const Description = styled.div`

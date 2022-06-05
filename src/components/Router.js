@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import AddTweet from 'routes/AddTweet';
 import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import Profile from '../routes/Profile';
@@ -17,6 +18,9 @@ const AppRouter = ({ refreshUser, isLoggedIn, user }) => {
             </Route>
             <Route exact path="/profile">
               <Profile user={user} refreshUser={refreshUser} />
+            </Route>
+            <Route exact path="/add-tweet">
+              <AddTweet user={user} />
             </Route>
           </>
         ) : (

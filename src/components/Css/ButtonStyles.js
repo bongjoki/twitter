@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 import { FontSizeBody3 } from './FontSize';
+import { colorBlack } from './Colors';
 
 export const buttonStyle1 = css`
   position: relative;
@@ -12,5 +13,6 @@ export const buttonStyle1 = css`
   display: flex;
   justify-content: center;
   font-size: ${FontSizeBody3};
+  color: ${colorBlack};
   font-weight: 600;
 `;
