@@ -37,6 +37,10 @@ const Input = styled.input`
   }
 `;
 
+const ErrorSection = styled.div`
+  margin-top: 12px;
+`;
+
 const Submit = styled.input`
   ${buttonStyle1}
   background-color: ${colorBlue1};
@@ -118,7 +122,7 @@ const AuthForm = () => {
           type="submit"
           value={newAccount ? '이메일로 가입하기' : '이메일로 로그인'}
         />
-        {error}
+        <ErrorSection>{error}</ErrorSection>
       </StyledAuthForm>
       <Description>
         {newAccount

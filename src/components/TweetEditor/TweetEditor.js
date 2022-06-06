@@ -8,10 +8,13 @@ import { FontSizeBody3 } from 'components/Css/FontSize';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
-import Spinner from 'components/Spinner';
 import Loading from 'components/Loading';
+import UserSection from 'components/UserSection';
 
 const StyledTweetEditor = styled.div`
+  form {
+    margin-top: 12px;
+  }
   textarea {
     width: 100%;
     height: 120px;
@@ -107,6 +110,7 @@ const TweetEditor = ({ user }) => {
   return (
     <StyledTweetEditor>
       <Header tweet={tweet} attachment={attachment} onSubmit={onSubmit} />
+      <UserSection user={user} />
       <form onSubmit={onSubmit}>
         <textarea
           placeholder="무슨 일이 일어나고 있나요?"

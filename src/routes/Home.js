@@ -1,6 +1,6 @@
 import Tweet from 'components/Tweet';
 import { dbService } from 'firebaseInstance';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,11 +15,17 @@ const StyledHome = styled.div`
   padding-bottom: 60px;
 `;
 
+const ButtonWrapper = styled.div`
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  right: 20px;
+`;
+
 const AddTweetButton = styled.button`
   cursor: pointer;
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+  position: fixed;
+  bottom: 80px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -30,6 +36,7 @@ const AddTweetButton = styled.button`
 `;
 
 const Home = ({ user }) => {
+  const ref = useRef(null);
   const [tweets, setTweets] = useState([]);
   const history = useHistory();
   useEffect(() => {
@@ -40,21 +47,24 @@ const Home = ({ user }) => {
   }, []);
 
   return (
-    <StyledHome>
+    <StyledHome ref={ref}>
       {tweets.map(tweet => (
         <Tweet
+          user={user}
           key={tweet.id}
           tweet={tweet}
           isMyTweet={tweet.creatorId === user.uid}
         />
       ))}
-      <AddTweetButton
-        onClick={() => {
-          history.push('/add-tweet');
-        }}
-      >
-        <FontAwesomeIcon icon={penIcon} />
-      </AddTweetButton>
+      <ButtonWrapper>
+        <AddTweetButton
+          onClick={() => {
+            history.push('/add-tweet');
+          }}
+        >
+          <FontAwesomeIcon icon={penIcon} />
+        </AddTweetButton>
+      </ButtonWrapper>
     </StyledHome>
   );
 };

@@ -1,9 +1,43 @@
 import { dbService, storageService } from 'firebaseInstance';
 import React, { useState } from 'react';
+import UserSection from './UserSection';
+import styled from 'styled-components';
+import { colorWhite } from './Css/Colors';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { Dropdown, Menu, Space } from 'antd';
 
-const Tweet = ({ tweet, isMyTweet }) => {
-  const [editable, setEditable] = useState(false);
+const StyledTweet = styled.div`
+  position: relative;
+  .text {
+    margin-top: 12px;
+    color: ${colorWhite};
+  }
+  .tweet-image {
+    margin-top: 12px;
+    display: block;
+    width: 50%;
+    border-radius: 8px;
+  }
+  & + & {
+    margin-top: 20px;
+  }
+`;
+
+const ShowMenuButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 12px;
+  right: 0;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const Tweet = ({ tweet, isMyTweet, user }) => {
   const [newTweet, setNewTweet] = useState(tweet.text);
+  const [menuVisible, setMenuVisible] = useState(false);
   const onDeleteClick = async () => {
     const ok = window.confirm('Are you sure tou want to delete this tweet?');
     if (ok) {
@@ -11,48 +45,35 @@ const Tweet = ({ tweet, isMyTweet }) => {
       await storageService.refFromURL(tweet.fileUrl).delete();
     }
   };
-  const toggleEditable = () => setEditable(prev => !prev);
-  const onSubmit = async event => {
-    event.preventDefault();
-    await dbService.doc(`tweets/${tweet.id}`).update({
-      text: newTweet,
-    });
-    setEditable(false);
-  };
-  const onChangeTweet = event => {
-    setNewTweet(event.target.value);
-  };
+
+  const menu = () => (
+    <Menu
+      items={[
+        {
+          label: <button>수정하기</button>,
+          key: '0',
+        },
+        {
+          label: <button onClick={onDeleteClick}>삭제하기</button>,
+          key: '1',
+        },
+      ]}
+    />
+  );
+
   return (
-    <div>
-      {editable ? (
-        <>
-          <form onSubmit={onSubmit}>
-            <input
-              type="text"
-              placeholder="Edit your tweet"
-              value={newTweet}
-              required
-              onChange={onChangeTweet}
-            />
-            <input type="submit" value="Update Tweet" />
-          </form>
-          <button onClick={toggleEditable}>Cancel</button>
-        </>
-      ) : (
-        <>
-          <h4>{tweet.text}</h4>
-          {tweet.fileUrl && (
-            <img src={tweet.fileUrl} width="50px" height="50px" alt="" />
-          )}
-          {isMyTweet && (
-            <>
-              <button onClick={onDeleteClick}>Delete Tweet</button>
-              <button onClick={toggleEditable}>Edit Tweet</button>
-            </>
-          )}
-        </>
+    <StyledTweet>
+      <UserSection user={user} />
+      <h4 className="text">{tweet.text}</h4>
+      {tweet.fileUrl && (
+        <img className="tweet-image" src={tweet.fileUrl} alt="" />
       )}
-    </div>
+      <Dropdown overlay={menu} trigger={['click']}>
+        <ShowMenuButton>
+          <FontAwesomeIcon icon={faEllipsisVertical} />
+        </ShowMenuButton>
+      </Dropdown>
+    </StyledTweet>
   );
 };
 
