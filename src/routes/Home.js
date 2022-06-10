@@ -50,10 +50,9 @@ const Home = ({ user }) => {
     <StyledHome ref={ref}>
       {tweets.map(tweet => (
         <Tweet
-          user={user}
           key={tweet.id}
           tweet={tweet}
-          isMyTweet={tweet.creatorId === user.uid}
+          isMyTweet={tweet.user.id === user.uid}
         />
       ))}
       <ButtonWrapper>

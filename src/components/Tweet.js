@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { colorWhite } from './Css/Colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { Dropdown, Menu, Space } from 'antd';
+import { Dropdown, Menu, Modal } from 'antd';
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const StyledTweet = styled.div`
   position: relative;
@@ -35,26 +37,31 @@ const ShowMenuButton = styled.div`
   }
 `;
 
-const Tweet = ({ tweet, isMyTweet, user }) => {
-  const [newTweet, setNewTweet] = useState(tweet.text);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const onDeleteClick = async () => {
-    const ok = window.confirm('Are you sure tou want to delete this tweet?');
-    if (ok) {
-      await dbService.doc(`tweets/${tweet.id}`).delete();
-      await storageService.refFromURL(tweet.fileUrl).delete();
-    }
+const Tweet = ({ tweet, isMyTweet }) => {
+  const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
+  const history = useHistory();
+  const onOk = async () => {
+    await dbService.doc(`tweets/${tweet.id}`).delete();
+    await storageService.refFromURL(tweet.fileUrl).delete();
   };
 
   const menu = () => (
     <Menu
       items={[
         {
-          label: <button>수정하기</button>,
+          label: (
+            <button onClick={() => history.push(`/edit-tweet/${tweet.id}`)}>
+              수정하기
+            </button>
+          ),
           key: '0',
         },
         {
-          label: <button onClick={onDeleteClick}>삭제하기</button>,
+          label: (
+            <button onClick={() => setVisibleDeleteModal(true)}>
+              삭제하기
+            </button>
+          ),
           key: '1',
         },
       ]}
@@ -63,16 +70,28 @@ const Tweet = ({ tweet, isMyTweet, user }) => {
 
   return (
     <StyledTweet>
-      <UserSection user={user} />
+      <UserSection user={tweet.user} />
       <h4 className="text">{tweet.text}</h4>
       {tweet.fileUrl && (
         <img className="tweet-image" src={tweet.fileUrl} alt="" />
       )}
-      <Dropdown overlay={menu} trigger={['click']}>
-        <ShowMenuButton>
-          <FontAwesomeIcon icon={faEllipsisVertical} />
-        </ShowMenuButton>
-      </Dropdown>
+      {isMyTweet && (
+        <Dropdown overlay={menu} trigger={['click']}>
+          <ShowMenuButton>
+            <FontAwesomeIcon icon={faEllipsisVertical} />
+          </ShowMenuButton>
+        </Dropdown>
+      )}
+      <Modal
+        title="삭제하기"
+        visible={visibleDeleteModal}
+        okText="삭제"
+        cancelText="취소"
+        onOk={onOk}
+        onCancel={() => setVisibleDeleteModal(false)}
+      >
+        <p>정말로 트윗을 삭제하시겠습니까?</p>
+      </Modal>
     </StyledTweet>
   );
 };

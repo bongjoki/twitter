@@ -22,10 +22,16 @@ const StyledUserSection = styled.div`
       }
     }
   }
+  span {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 const UserSection = ({ user }) => {
-  const { photoURL, displayName, uid } = user;
+  const { photoURL, displayName, id, uid } = user;
   return (
     <StyledUserSection>
       {photoURL ? (
@@ -35,7 +41,7 @@ const UserSection = ({ user }) => {
           <FontAwesomeIcon icon={faUser} />
         </div>
       )}
-      <span>{displayName || `USER${uid}`}</span>
+      <span>{displayName || `USER${id || uid}`}</span>
     </StyledUserSection>
   );
 };

@@ -55,10 +55,16 @@ const AttachedImage = styled.div`
   }
 `;
 
-const TweetEditor = ({ user }) => {
+const TweetEditor = ({
+  user,
+  tweetId,
+  savedTweet,
+  savedAttachment,
+  isPost,
+}) => {
   const imageInputRef = useRef(null);
-  const [tweet, setTweet] = useState('');
-  const [attachment, setAttachment] = useState();
+  const [tweet, setTweet] = useState(savedTweet || '');
+  const [attachment, setAttachment] = useState(savedAttachment || '');
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const onSubmit = async event => {
@@ -72,11 +78,21 @@ const TweetEditor = ({ user }) => {
     }
     const tweetObject = {
       createdAt: Date.now(),
-      creatorId: user.uid,
       text: tweet,
       fileUrl,
+      user: {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        id: user.uid,
+        email: user.email,
+      },
     };
-    await dbService.collection('tweets').add(tweetObject);
+    if (isPost) {
+      await dbService.collection('tweets').add(tweetObject);
+    }
+    if (!isPost) {
+      await dbService.doc(`tweets/${tweetId}`).update({ text: tweet, fileUrl });
+    }
     setTweet('');
     setAttachment();
     history.push('/');

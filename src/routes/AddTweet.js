@@ -9,7 +9,7 @@ const StyledAddTweet = styled.div`
 const AddTweet = ({ user }) => {
   return (
     <StyledAddTweet>
-      <TweetEditor user={user} />
+      <TweetEditor user={user} isPost />
     </StyledAddTweet>
   );
 };
