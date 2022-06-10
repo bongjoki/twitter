@@ -72,9 +72,14 @@ const TweetEditor = ({
     event.preventDefault();
     let fileUrl = null;
     if (attachment) {
-      const fileRef = storageService.ref().child(`${user.uid}/${uuidv4()}`);
-      const response = await fileRef.putString(attachment, 'data_url');
-      fileUrl = await response.ref.getDownloadURL();
+      if (attachment !== savedAttachment) {
+        const fileRef = storageService.ref().child(`${user.uid}/${uuidv4()}`);
+        const response = await fileRef.putString(attachment, 'data_url');
+        fileUrl = await response.ref.getDownloadURL();
+      }
+      if (attachment === savedAttachment) {
+        fileUrl = attachment;
+      }
     }
     const tweetObject = {
       createdAt: Date.now(),
@@ -91,7 +96,8 @@ const TweetEditor = ({
       await dbService.collection('tweets').add(tweetObject);
     }
     if (!isPost) {
-      await dbService.doc(`tweets/${tweetId}`).update({ text: tweet, fileUrl });
+      let updateTweet = { text: tweet, fileUrl };
+      await dbService.doc(`tweets/${tweetId}`).update(updateTweet);
     }
     setTweet('');
     setAttachment();
